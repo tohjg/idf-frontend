@@ -3,6 +3,10 @@
   font-family: Helvetica, Arial, Sans-Serif;
 }
 
+body {
+  background-color: #F9F9F9;
+}
+
 /* container that hold all the every thing*/
 .container {
   margin: 1em 18%;
@@ -45,7 +49,7 @@
   top: 0;
   left: 0;
   border: solid transparent;
-  border-left-color: #fff;
+  border-left-color: #F9F9F9;
   border-width: 1.9em;
 }
 
