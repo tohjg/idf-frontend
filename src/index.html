@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Sign Up Registration</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+</head>
+<body>
+    <header>
+        <ul class="stepper">
+            <li class="selected">Step 1</li>
+            <li>Step 2</li>
+            <li>Step 3</li>
+        </ul>
+    </header>
+    <h1>Add collegues to your company</h1>
+    <div class="box">
+        <p>You can add 10 collegues to your company.</p>
+        <p>You can add up to 10 company members, and there are currently 0</p>
+        <div class="members form-container">
+          <div class="member form">
+            <input type="text" name="name" id="name" placeholder="John Doe">
+            <input type="text" name="email" id="email" placeholder="john.doe@gmail.com">
+            <span class="delete-member"></span>
+          </div>
+          <div>
+            <input type="checkbox" name="notify-teammate" id="notify-teammate">
+            <label for="notify-teammate">Notify collegues by email</label>
+          </div>
+        </div>
+        <button>Add a collegues</button>
+        <button type="reset">Reset</button>
+    </div>
+    <h3>Exisiting collegues</h3>
+    <ul class="member added">
+      <li><span>name (email)</span><span class="delete-member"></span></li>
+    </ul>
+
+    <footer>
+      <a href="#">Footer link</a>
+      <a href="#">Footer link</a>
+      <a href="#">Footer link</a>
+    </footer>
+</body>
+</html>
