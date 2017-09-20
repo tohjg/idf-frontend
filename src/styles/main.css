@@ -7,6 +7,34 @@ body {
   background-color: #F9F9F9;
 }
 
+a {
+  color: #019DDA;
+}
+
+button {
+  margin: .2em;
+  background: #019DDA;
+  border: 0px solid transparent;
+  border-radius: 3px;
+  color: #fff;
+  padding: 0.7em 1.3em 0.5em 1.3em;
+
+  -webkit-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+  -moz-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+  box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+}
+
+input[type=text] {
+  -webkit-box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  -moz-box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  border: 1px solid #E2E2E2;
+  padding: 0.6em 0.6em 0.5em 0.6em;
+  width:100%;
+  margin: 0 .2em;
+}
+
+
 /* container that hold all the every thing*/
 .container {
   margin: 1em 18%;
@@ -62,6 +90,57 @@ body {
   top: 0;
   left: 100%;
   z-index: 20;
+}
+
+/* box */
+.box {
+  background: #fff;
+  padding: 1.2em;
+  -webkit-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+}
+
+/* this is to remove top margin as box padding is configuored in bx class */
+.box > *:first-child {
+  margin-top: 0;
+}
+
+.box > p {
+  margin: .3em 0;
+}
+
+.box > .members {
+  margin: 1em 0;
+}
+
+.box > .members > .member {
+  display: flex;
+  align-items: center;
+}
+
+.box > .members > .member > .remove-member {
+  padding-left: .4em
+}
+
+.box > .add-member {
+  margin-top: .9em;
+  margin-bottom: 3em;
+}
+
+.box .remove-member {
+  color: #BB0000;
+}
+
+.box > .button-group {
+  text-align: center;
+}
+
+.box > .button-group > button[type=reset] {
+  border: 0;
+  background: transparent;
+  color: #019DDA;
+  box-shadow: inherit;
 }
 
 
