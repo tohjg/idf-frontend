@@ -7,7 +7,7 @@ gulp.task('serve', () => {
     server: './src'
   })
 
-  gulp.watch('./src/*').on('change', browserSync.reload);
+  gulp.watch('./src/*/**').on('change', browserSync.reload);
 })
 
 gulp.task('default', ['serve'])
