@@ -1,0 +1,63 @@
+/* everybody */
+* {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
+/* container that hold all the every thing*/
+.container {
+  margin: 1em 18%;
+}
+
+/* styling for stepper */
+.stepper {
+  list-style: none;
+  display: inline-block;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.stepper li {
+  float: left;
+  background: #848484;
+  padding: 1.4em 0em 1.2em 2.9em;
+  position: relative;
+  width: 27.6%;
+  margin: 0 1px;
+}
+
+/* selected in stepper */
+.stepper > .selected {
+  background: #019DDA;
+}
+
+.stepper > .selected > span::after {
+  border-left-color: #019DDA;
+}
+
+/* generate arrows */
+.stepper > li > span::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: solid transparent;
+  border-left-color: #fff;
+  border-width: 1.9em;
+}
+
+.stepper > li > span::after {
+  content: "";
+  border-left: 1.9em solid #848484;
+  border-top: 1.9em solid transparent;
+  border-bottom: 1.9em solid transparent;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 20;
+}
+
+
