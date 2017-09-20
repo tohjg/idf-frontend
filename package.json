@@ -1,0 +1,27 @@
+{
+  "name": "idf-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tohjg/idf-frontend.git"
+  },
+  "author": "darien toh (tohjg85@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tohjg/idf-frontend/issues"
+  },
+  "homepage": "https://github.com/tohjg/idf-frontend#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.8"
+  }
+}
