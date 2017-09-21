@@ -4,6 +4,7 @@
     <title>Company Sign Up Registration</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/models/member.js" type="module"></script>
+    <script src="js/utils/form-validator.js" type="module"></script>
     <script src="js/controllers/member.js" type="module"></script>
     <script src="js/form-control.js" type="module"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
@@ -29,7 +30,7 @@
         <div class="members">
           <div class="member hide" id="add-member-template">
             <input type="text" name="name" id="name" placeholder="John Doe">
-            <input type="text" name="email" id="email" placeholder="john.doe@gmail.com">
+            <input type="email" name="email" id="email" placeholder="john.doe@gmail.com">
             <i class="fa fa-trash-o remove-member"></i>
           </div>
         </div>

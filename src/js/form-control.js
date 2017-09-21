@@ -1,7 +1,8 @@
 import MemberController from './controllers/member.js'
-
+import Validator from './utils/form-validator.js'
 (($) => {
   const MAX_MEMBER_IN_FORM = 5
+  const validator = new Validator()
   let memberFormCount = 0
 
   const populateMembers = (members) => {
@@ -43,9 +44,28 @@ import MemberController from './controllers/member.js'
         }
       })
 
-      // todo: add validation
-      // $self.find('#name').on('keyup paste', validator.required)
-      // $self.find('#email').on('keyup paste', ((e) => validator.required(validator.email(e))))
+      $self.find('#name').on('keyup paste', (e) => {
+        // invalidate empty field
+        if (!validator.required(e)) {
+          // assume field is empty
+          $(e.currentTarget).addClass('invalid')
+        } else {
+          $(e.currentTarget).removeClass('invalid')
+        }
+      })
+      $self.find('#email').on('keyup paste', (e) => {
+        // invalidate empty field
+        let isValid = validator.required(e)
+        // invalidate email format
+        isValid = validator.email(e)
+
+        if (!isValid) {
+          // assume field is empty or invalid email
+          $(e.currentTarget).addClass('invalid')
+        } else {
+          $(e.currentTarget).removeClass('invalid')
+        }
+      })
 
       $formContainer.append($self)
 
