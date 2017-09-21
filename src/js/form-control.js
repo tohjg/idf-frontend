@@ -44,6 +44,7 @@ import Validator from './utils/form-validator.js'
         }
       })
 
+      // name field validation
       $self.find('#name').on('keyup paste', (e) => {
         // invalidate empty field
         if (!validator.required(e)) {
@@ -53,6 +54,8 @@ import Validator from './utils/form-validator.js'
           $(e.currentTarget).removeClass('invalid')
         }
       })
+
+      // email field validation
       $self.find('#email').on('keyup paste', (e) => {
         // invalidate empty field
         let isValid = validator.required(e)
