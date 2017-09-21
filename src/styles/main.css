@@ -128,7 +128,7 @@ input[type=text] {
   margin-bottom: 3em;
 }
 
-.box .remove-member {
+.remove-member {
   color: #BB0000;
 }
 
@@ -141,6 +141,23 @@ input[type=text] {
   background: transparent;
   color: #019DDA;
   box-shadow: inherit;
+  padding: .3em 0;
 }
 
+/* */
+.member-added {
+  padding: 0;
+}
 
+.member-added li {
+  list-style: none;
+  padding: .5em;
+}
+
+.member-added li:nth-child(even) {
+  background: #dddddd;
+}
+
+.member-added li > .remove-member {
+  float: right;
+}
