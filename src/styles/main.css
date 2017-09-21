@@ -17,6 +17,7 @@ a:hover {
 }
 
 button {
+  cursor: pointer;
   margin: .2em;
   background: #019DDA;
   border: 0px solid transparent;
@@ -41,6 +42,44 @@ input[type=text] {
   padding: 0.6em 0.6em 0.5em 0.6em;
   width:100%;
   margin: 0 .2em;
+}
+
+/* check box styling */
+.square-checkbox > input[type=checkbox] {
+  visibility: hidden;
+}
+
+.square-checkbox {
+  width: 13px;
+  height: 13px;
+  border: 2px solid #019DDA;
+  border-radius: 3px;
+  position: relative;
+  display: inline-block;
+  margin: 0 .1em 0 .6em;
+}
+
+.square-checkbox label {
+  width: 9px;
+	height: 9px;
+	border-radius: 1px;
+
+	transition: all .5s ease;
+	cursor: pointer;
+  position: absolute;
+	top: 2px;
+	left: 2px;
+	z-index: 1;
+
+	background: transparent;
+}
+
+.square-checkbox input[type=checkbox]:checked + label {
+	background: #019DDA;
+}
+
+.square-checkbox-label {
+  display: inline-block;
 }
 
 /* sticky footer */
