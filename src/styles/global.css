@@ -46,7 +46,7 @@ input[type=text] {
 
 /* sticky footer */
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background: #dddddd;
   padding: 1.6em 0 1em;
