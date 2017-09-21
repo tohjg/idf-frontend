@@ -74,6 +74,13 @@ import Validator from './utils/form-validator.js'
 
       // increment form count
       memberFormCount ++
+
+      // change 'add 'em all' button label
+      if (memberFormCount == 1) {
+        $('#add-member-btn').text(`Add a colleague`)
+      } else {
+        $('#add-member-btn').text(`Add ${memberFormCount} colleagues`)
+      }
     }
   }
 
