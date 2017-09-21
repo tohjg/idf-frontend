@@ -93,6 +93,6 @@ import Validator from './utils/form-validator.js'
     addMemberForm();
 
     // add click listener to 'add another colleague' link
-    $('.add-member').click(addMemberForm);
+    $('#add-member-link').click(addMemberForm);
   })
 })(jQuery)
