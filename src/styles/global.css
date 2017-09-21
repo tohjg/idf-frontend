@@ -1,0 +1,61 @@
+/* everybody */
+* {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
+body {
+  background-color: #F9F9F9;
+}
+
+a {
+  color: #019DDA;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  margin: .2em;
+  background: #019DDA;
+  border: 0px solid transparent;
+  border-radius: 3px;
+  color: #fff;
+  padding: 0.7em 1.3em 0.5em 1.3em;
+
+  -webkit-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+  -moz-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+  box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+}
+
+h2, h3 {
+  margin: 1.2em 0;
+}
+
+input[type=text] {
+  -webkit-box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  -moz-box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  box-shadow: inset 2px 2px 2px 0px rgba(209,209,209,0.4);
+  border: 1px solid #E2E2E2;
+  padding: 0.6em 0.6em 0.5em 0.6em;
+  width:100%;
+  margin: 0 .2em;
+}
+
+/* sticky footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  background: #dddddd;
+  padding: 1.6em 0 1em;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* container that hold all the every thing*/
+.container {
+  margin: 1em 18%;
+}

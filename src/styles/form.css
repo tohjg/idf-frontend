@@ -1,0 +1,69 @@
+/* box */
+.box {
+  background: #fff;
+  padding: 1.2em;
+  -webkit-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.12);
+}
+
+/* this is to remove top margin as box padding is configuored in bx class */
+.box > *:first-child {
+  margin-top: 0;
+}
+
+.box > p {
+  margin: .3em 0;
+}
+
+.box > .members {
+  margin: 1em 0;
+}
+
+.box > .members > .member {
+  display: flex;
+  align-items: center;
+}
+
+.box > .members > .member > .remove-member {
+  padding-left: .4em
+}
+
+.box > .add-member {
+  margin-top: .9em;
+  margin-bottom: 3em;
+}
+
+.remove-member {
+  color: #BB0000;
+}
+
+.box > .button-group {
+  text-align: center;
+}
+
+.box > .button-group > button[type=reset] {
+  border: 0;
+  background: transparent;
+  color: #019DDA;
+  box-shadow: inherit;
+  padding: .3em 0;
+}
+
+/* added member */
+.member-added {
+  padding: 0;
+}
+
+.member-added li {
+  list-style: none;
+  padding: .5em;
+}
+
+.member-added li:nth-child(even) {
+  background: #dddddd;
+}
+
+.member-added li > .remove-member {
+  margin-left: 1.4em;
+}
