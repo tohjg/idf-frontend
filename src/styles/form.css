@@ -36,6 +36,7 @@
 
 .remove-member {
   color: #BB0000;
+  cursor: pointer;
 }
 
 .box > .button-group {

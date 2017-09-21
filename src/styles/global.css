@@ -41,7 +41,7 @@ input[type=text] {
   border: 1px solid #E2E2E2;
   padding: 0.6em 0.6em 0.5em 0.6em;
   width:100%;
-  margin: 0 .2em;
+  margin: .4em .2em;
 }
 
 /* sticky footer */
@@ -58,4 +58,10 @@ footer {
 /* container that hold all the every thing*/
 .container {
   margin: 1em 18%;
+}
+
+.hide {
+  visibility: hidden;
+  height: 0;
+  width: 0;
 }
