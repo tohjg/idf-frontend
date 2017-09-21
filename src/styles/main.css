@@ -9,6 +9,11 @@ body {
 
 a {
   color: #019DDA;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 button {
@@ -22,6 +27,10 @@ button {
   -webkit-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
   -moz-box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
   box-shadow: 0px 1px 3px 1px rgba(138,138,138,0.2);
+}
+
+h2, h3 {
+  margin: 1.2em 0;
 }
 
 input[type=text] {
@@ -169,5 +178,5 @@ footer {
 }
 
 .member-added li > .remove-member {
-  float: right;
+  margin-left: 1.4em;
 }
