@@ -34,6 +34,16 @@ input[type=text] {
   margin: 0 .2em;
 }
 
+/* sticky footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  background: #dddddd;
+  padding: 1.6em 0 1em;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
 
 /* container that hold all the every thing*/
 .container {
