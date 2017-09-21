@@ -23,7 +23,7 @@ import Validator from './utils/form-validator.js'
     const $total = $('#member-total')
 
     $total.text(memberController.members.length)
-    $left.text(memberController.total - memberController.members.length)
+    $left.text((memberController.total - memberController.members.length) + ' colleague'+ (memberController.members.length > 1 ? '' : 's'))
   }
 
   const addMemberForm = () => {
