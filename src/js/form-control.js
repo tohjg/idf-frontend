@@ -30,7 +30,6 @@ import Validator from './utils/form-validator.js'
 
           // add click listener to remove icon
           $self.find('.remove-member').click((e) => {
-            console.log('-- remove me')
             // remove it
             memberController.remove(member)
 
