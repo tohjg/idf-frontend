@@ -27,7 +27,7 @@ const isLocalStorageAvailable = () => {
   }
 }
 
-const TOTAL_MEMBERS = 10;
+const TOTAL_MEMBERS = 10
 
 export default class {
   constructor() {
@@ -47,12 +47,15 @@ export default class {
     if (isLocalStorageAvailable()) {
       // save colleagues into local storage
       // value must be json string as local storage only receive string only
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.colleagues));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.colleagues))
     }
   }
 
   add({name, email}) {
-    this.colleagues.push(new Colleague(name, email))
+    if (this.colleagues.length < this.total) {
+      // assume there are some space to add
+      this.colleagues.push(new Colleague(name, email))
+    }
   }
 
   remove(colleague) {
@@ -66,7 +69,7 @@ export default class {
       // save to localstorage
       this.save()
 
-      return true;
+      return true
     }
     return false
   }

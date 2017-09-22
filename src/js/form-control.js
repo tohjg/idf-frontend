@@ -34,7 +34,7 @@ import Validator from './utils/form-validator.js'
             colleagueController.remove(colleague)
 
             // update colleague count
-            updateColleaguesCount(colleagueController);
+            updateColleaguesCount(colleagueController)
 
             // remove itself from the view
             // not matter if the colleague still exist in the list
@@ -106,6 +106,7 @@ import Validator from './utils/form-validator.js'
     const $colleagueFormTmpl = $('#add-colleague-template')
     const $formContainer = $('.colleagues')
 
+    // add colleague form if form count is less than 5 (MAX_COLLEAGUE_IN_FORM)
     if (colleagueFormCount < MAX_COLLEAGUE_IN_FORM) {
       // clone a template
       const $self = $colleagueFormTmpl.clone()
@@ -121,7 +122,7 @@ import Validator from './utils/form-validator.js'
 
           // update form count
           colleagueFormCount --
-          updateAddColleagueButtonLabel();
+          updateAddColleagueButtonLabel()
         }
       })
 
@@ -142,6 +143,10 @@ import Validator from './utils/form-validator.js'
   }
 
   const addColleagueToStorage = (colleagueController) => {
+    // break this function if total colleagues has reach the max
+    if (colleagueController.colleagues.length >= colleagueController.total)
+      return
+
     const $colleagueForms = $('.colleague:not(.hide)').toArray()
 
     // clone colleagues from colleagueController
@@ -242,7 +247,12 @@ import Validator from './utils/form-validator.js'
 
     // add click listener to 'add another colleague' link
     // to add new colleague form
-    $('#add-colleague-link').click(addColleagueForm)
+    $('#add-colleague-link').click((e) => {
+      // check if total form is exceed max colleagues number
+      if (colleagueController.colleagues.length + colleagueFormCount + 1 <= colleagueController.total) {
+        addColleagueForm()
+      }
+    })
 
     // click listener to 'add all the colleagues' button
     // to add all the filled colleague form to storage
