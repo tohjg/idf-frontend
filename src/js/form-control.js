@@ -87,7 +87,7 @@ import Validator from './utils/form-validator.js'
     const lookupEmail = $emailField.val()
 
     // skip checking since there are no data to check up
-    if (members.length == 0) return false;
+    if (members.length == 0) return false
 
     return members.every((member) => {
       console.log('lookup @', member.name, member.email, lookupEmail)
@@ -108,8 +108,13 @@ import Validator from './utils/form-validator.js'
       // listen to remove member form listener
       $self.find('.remove-member').click((evt) => {
         if (memberFormCount > 1) {
+
+          // remove the form
           $self.remove()
+
+          // update form count
           memberFormCount --
+          updateAddColleagueButtonLabel();
         }
       })
 
@@ -125,11 +130,7 @@ import Validator from './utils/form-validator.js'
       memberFormCount ++
 
       // change 'add 'em all' button label
-      if (memberFormCount == 1) {
-        $('#add-member-btn').text(`Add a colleague`)
-      } else {
-        $('#add-member-btn').text(`Add ${memberFormCount} colleagues`)
-      }
+      updateAddColleagueButtonLabel()
     }
   }
 
@@ -177,6 +178,8 @@ import Validator from './utils/form-validator.js'
 
       // remove the form
       $form.remove()
+
+      memberFormCount --
     })
 
     // assume all field is valid
@@ -196,7 +199,20 @@ import Validator from './utils/form-validator.js'
     if ($('.member:not(.hide)').length == 0) {
       // assume there's no more form available
       // add new form
-      addMemberForm();
+      addMemberForm()
+    }
+
+    // update add button label
+    updateAddColleagueButtonLabel()
+  }
+
+  const updateAddColleagueButtonLabel = () => {
+    if (memberFormCount == 1) {
+      // just a single form
+      $('#add-member-btn').text(`Add a colleague`)
+    } else {
+      // more than that
+      $('#add-member-btn').text(`Add ${memberFormCount} colleagues`)
     }
   }
 
