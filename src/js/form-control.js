@@ -162,7 +162,7 @@ import Validator from './utils/form-validator.js'
       console.log('name is valid')
 
       // invalidate email field
-      if (!invalidateRequire($email) && !invalidateEmail($email)) {
+      if (!invalidateRequire($email) || !invalidateEmail($email)) {
         // assume email is not valid email format
         console.warn('todo: show error saying email is invalid format')
         return
