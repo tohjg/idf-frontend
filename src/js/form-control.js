@@ -18,7 +18,7 @@ import Validator from './utils/form-validator.js'
 
       memberController.members.forEach((member) => {
         // check if member has populated in DOM
-        if ($container.find('#member_template:not(.hide)').find('#email:contains("'+member.email+'")')) {
+        if ($container.find('#member_template:not(.hide)').find('#email:contains("'+member.email+'")').length == 0) {
           // clone from new member template
           const $self = $tmpl.clone()
           // and show up
