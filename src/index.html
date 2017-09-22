@@ -3,9 +3,9 @@
 <head>
     <title>Company Sign Up Registration</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/models/member.js" type="module"></script>
+    <script src="js/models/colleague.js" type="module"></script>
     <script src="js/utils/form-validator.js" type="module"></script>
-    <script src="js/controllers/member.js" type="module"></script>
+    <script src="js/controllers/colleague.js" type="module"></script>
     <script src="js/form-control.js" type="module"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,31 +25,31 @@
     </header>
     <h2>Add collegues to your company</h2>
     <div class="box">
-        <p>You can add <strong id="member-left">10 collegues</strong> to your company.</p>
-        <p>You can add up to 10 company members, and there are currently <span id="member-total">0</span></p>
-        <div class="members">
-          <div class="member hide" id="add-member-template">
+        <p>You can add <strong id="colleague-left">10 collegues</strong> to your company.</p>
+        <p>You can add up to 10 company colleagues, and there are currently <span id="colleague-total">0</span></p>
+        <div class="colleagues">
+          <div class="colleague hide" id="add-colleague-template">
             <input type="text" name="name" id="name" placeholder="John Doe">
             <input type="email" name="email" id="email" placeholder="john.doe@gmail.com">
-            <i class="fa fa-trash-o remove-member"></i>
+            <i class="fa fa-trash-o remove-colleague"></i>
           </div>
         </div>
         <div class="square-checkbox">
-          <input type="checkbox" name="notify-member" id="notify-member" checked>
-          <label for="notify-member"></label>
+          <input type="checkbox" name="notify-colleague" id="notify-colleague" checked>
+          <label for="notify-colleague"></label>
         </div>
         <div class="square-checkbox-label">Notify colleagues by email</div>
-        <div class="add-member">
-          <a id="add-member-link" href="javascript:void(0)">+ Add another colleague</a>
+        <div class="add-colleague">
+          <a id="add-colleague-link" href="javascript:void(0)">+ Add another colleague</a>
         </div>
         <div class="button-group">
-          <button id="add-member-btn">Add a collegue</button><br />
-          <button type="reset">Reset</button>
+          <button id="add-colleague-btn">Add a collegue</button><br />
+          <button type="reset" id="reset-btn">Reset</button>
         </div>
     </div>
     <h3>Exisiting collegues</h3>
-    <ul class="member-added">
-      <li class="hide" id="member_template"><span id="name">name</span> (<span id="email">email</span>)<i class="fa fa-trash-o remove-member"></i></li>
+    <ul class="colleague-added">
+      <li class="hide" id="colleague_template"><span id="name">name</span> (<span id="email">email</span>)<i class="fa fa-trash-o remove-colleague"></i></li>
     </ul>
     <div class="footer-spacer"></div>
   </div>

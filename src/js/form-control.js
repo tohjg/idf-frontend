@@ -1,40 +1,40 @@
-import MemberController from './controllers/member.js'
+import ColleagueController from './controllers/colleague.js'
 import Validator from './utils/form-validator.js'
 (($) => {
-  const MAX_MEMBER_IN_FORM = 5
+  const MAX_COLLEAGUE_IN_FORM = 5
   const validator = new Validator()
-  let memberFormCount = 0
+  let colleagueFormCount = 0
 
-  const populateMembers = (memberController) => {
-    const $tmpl = $('#member_template')
-    const $container = $('.member-added')
+  const populateColleagues = (colleagueController) => {
+    const $tmpl = $('#colleague_template')
+    const $container = $('.colleague-added')
     if ($tmpl.length != 1) {
-      console.warn('Member template is not found in the HTML')
+      console.warn('colleague template is not found in the HTML')
       return
     }
 
-    if (memberController.members.length > 0) {
-      // assume template is available and has members
+    if (colleagueController.colleagues.length > 0) {
+      // assume template is available and has colleagues
 
-      memberController.members.forEach((member) => {
-        // check if member has populated in DOM
-        if ($container.find('#member_template:not(.hide)').find('#email:contains("'+member.email+'")').length == 0) {
-          // clone from new member template
+      colleagueController.colleagues.forEach((colleague) => {
+        // check if colleague has populated in DOM
+        if ($container.find('#colleague_template:not(.hide)').find('#email:contains("'+colleague.email+'")').length == 0) {
+          // clone from new colleague template
           const $self = $tmpl.clone()
           // and show up
           .removeClass('hide')
 
           // populate model data to view
-          $self.find('#name').text(member.name)
-          $self.find('#email').text(member.email)
+          $self.find('#name').text(colleague.name)
+          $self.find('#email').text(colleague.email)
 
           // add click listener to remove icon
-          $self.find('.remove-member').click((e) => {
+          $self.find('.remove-colleague').click((e) => {
             // remove it
-            memberController.remove(member)
+            colleagueController.remove(colleague)
 
             // remove itself from the view
-            // not matter if the member still exist in the list
+            // not matter if the colleague still exist in the list
             $self.remove()
           })
 
@@ -45,12 +45,12 @@ import Validator from './utils/form-validator.js'
     }
   }
 
-  const updateMembersCount = (memberController) => {
-    const $left = $('#member-left')
-    const $total = $('#member-total')
+  const updateColleaguesCount = (colleagueController) => {
+    const $left = $('#colleague-left')
+    const $total = $('#colleague-total')
 
-    $total.text(memberController.members.length)
-    $left.text((memberController.total - memberController.members.length) + ' colleague'+ (memberController.members.length > 1 ? '' : 's'))
+    $total.text(colleagueController.colleagues.length)
+    $left.text((colleagueController.total - colleagueController.colleagues.length) + ' colleague'+ (colleagueController.colleagues.length > 1 ? '' : 's'))
   }
 
   const invalidateRequire = ($field) => {
@@ -82,42 +82,42 @@ import Validator from './utils/form-validator.js'
     return isValid
   }
 
-  const checkEmailExist = ($emailField, members) => {
+  const checkEmailExist = ($emailField, colleagues) => {
     const lookupEmail = $emailField.val()
 
     // skip checking since there are no data to check up
-    if (members.length == 0) return false
+    if (colleagues.length == 0) return false
 
     // Array.every iterates array until a test has failed.
-    return !members.every((member) => {
+    return !colleagues.every((colleague) => {
       //   ^... why exclamation is here?
       //
-      // function should return true when member email is not similar email from the DOM,
+      // function should return true when colleague email is not similar email from the DOM,
       // otherwise false when found and break from the loop
       // thus exclamation will flip the boolean switch to true
-      return (member.email !== lookupEmail)
+      return (colleague.email !== lookupEmail)
     })
   }
 
-  const addMemberForm = () => {
-    const $memberFormTmpl = $('#add-member-template')
-    const $formContainer = $('.members')
+  const addColleagueForm = () => {
+    const $colleagueFormTmpl = $('#add-colleague-template')
+    const $formContainer = $('.colleagues')
 
-    if (memberFormCount < MAX_MEMBER_IN_FORM) {
+    if (colleagueFormCount < MAX_COLLEAGUE_IN_FORM) {
       // clone a template
-      const $self = $memberFormTmpl.clone()
+      const $self = $colleagueFormTmpl.clone()
         // show it
         .removeClass('hide')
 
-      // listen to remove member form listener
-      $self.find('.remove-member').click((evt) => {
-        if (memberFormCount > 1) {
+      // listen to remove colleague form listener
+      $self.find('.remove-colleague').click((evt) => {
+        if (colleagueFormCount > 1) {
 
           // remove the form
           $self.remove()
 
           // update form count
-          memberFormCount --
+          colleagueFormCount --
           updateAddColleagueButtonLabel();
         }
       })
@@ -131,20 +131,20 @@ import Validator from './utils/form-validator.js'
       $formContainer.append($self)
 
       // increment form count
-      memberFormCount ++
+      colleagueFormCount ++
 
       // change 'add 'em all' button label
       updateAddColleagueButtonLabel()
     }
   }
 
-  const addMemberToStorage = (memberController) => {
-    const $memberForms = $('.member:not(.hide)').toArray()
+  const addColleagueToStorage = (colleagueController) => {
+    const $colleagueForms = $('.colleague:not(.hide)').toArray()
 
-    // clone members from memberController
-    const members = memberController.members
+    // clone colleagues from colleagueController
+    const colleagues = colleagueController.colleagues
 
-    $memberForms.forEach((form) => {
+    $colleagueForms.forEach((form) => {
       const $form = $(form)
       const $name = $form.find('#name')
       const $email = $form.find('#email')
@@ -167,7 +167,7 @@ import Validator from './utils/form-validator.js'
       console.log('email is valid')
 
       // invalidate email must not exist in the list
-      if (checkEmailExist($email, members)) {
+      if (checkEmailExist($email, colleagues)) {
         // assume email is already added
         console.warn('todo: show error saying email has exist in the list')
         return
@@ -178,32 +178,32 @@ import Validator from './utils/form-validator.js'
       const name = $name.val()
       const email = $email.val()
 
-      memberController.add({name, email})
+      colleagueController.add({name, email})
 
       // remove the form
       $form.remove()
 
-      memberFormCount --
+      colleagueFormCount --
     })
 
     // assume all field is valid
 
-    // register all the data to memberController.member
-    memberController.members = members
+    // register all the data to colleagueController.colleague
+    colleagueController.colleagues = colleagues
 
     // save to localStorage
-    memberController.save()
+    colleagueController.save()
 
-    // populate all the member in 'Existing colleagues'
-    populateMembers(memberController)
+    // populate all the colleague in 'Existing colleagues'
+    populateColleagues(colleagueController)
 
-    // update member count
-    updateMembersCount(memberController)
+    // update colleague count
+    updateColleaguesCount(colleagueController)
 
-    if ($('.member:not(.hide)').length == 0) {
+    if ($('.colleague:not(.hide)').length == 0) {
       // assume there's no more form available
       // add new form
-      addMemberForm()
+      addColleagueForm()
     }
 
     // update add button label
@@ -211,42 +211,45 @@ import Validator from './utils/form-validator.js'
   }
 
   const updateAddColleagueButtonLabel = () => {
-    if (memberFormCount == 1) {
+    if (colleagueFormCount == 1) {
       // just a single form
-      $('#add-member-btn').text(`Add a colleague`)
+      $('#add-colleague-btn').text(`Add a colleague`)
     } else {
       // more than that
-      $('#add-member-btn').text(`Add ${memberFormCount} colleagues`)
+      $('#add-colleague-btn').text(`Add ${colleagueFormCount} colleagues`)
     }
   }
 
   $(document).ready(() => {
     // when dom is ready
 
-    // init member model controller
-    const memberController = new MemberController()
+    // init colleague model controller
+    const colleagueController = new ColleagueController()
 
-    if (memberController.members.length > 0) {
-      // populate all the members to existing colleague
-      populateMembers(memberController)
+    if (colleagueController.colleagues.length > 0) {
+      // populate all the colleagues to existing colleague
+      populateColleagues(colleagueController)
     }
 
-    // update member count based
-    updateMembersCount(memberController)
+    // update colleague count based
+    updateColleaguesCount(colleagueController)
 
     // populate the first form
-    addMemberForm()
+    addColleagueForm()
 
     // add click listener to 'add another colleague' link
     // to add new colleague form
-    $('#add-member-link').click(addMemberForm)
+    $('#add-colleague-link').click(addColleagueForm)
 
     // click listener to 'add all the colleagues' button
     // to add all the filled colleague form to storage
     // and populate out @ existing colleagues
-    $('#add-member-btn').click((e) => addMemberToStorage(memberController))
+    $('#add-colleague-btn').click((e) => addColleagueToStorage(colleagueController))
 
     // click listener for 'reset' button
-    $('#reset-btn').click((e) => memberController.hardReset())
+    $('#reset-btn').click((e) => {
+      console.warn('todo: reset available form')
+      colleagueController.hardReset()
+    })
   })
 })(jQuery)

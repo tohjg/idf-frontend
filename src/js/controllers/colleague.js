@@ -1,6 +1,6 @@
-import Member from '../models/member.js'
+import Colleague from '../models/colleague.js'
 
-const STORAGE_KEY = 'idf_frontend_members'
+const STORAGE_KEY = 'idf_frontend_colleagues'
 const isLocalStorageAvailable = () => {
   try {
     var storage = window['localStorage'],
@@ -31,11 +31,11 @@ const TOTAL_MEMBERS = 10;
 
 export default class {
   constructor() {
-    this.members = []
+    this.colleagues = []
 
     if (isLocalStorageAvailable()) {
       // populate data from localstorage
-      this.members = Member.fromArray(
+      this.colleagues = Colleague.fromArray(
         JSON.parse(localStorage.getItem(STORAGE_KEY))
       )
     } else {
@@ -45,23 +45,23 @@ export default class {
 
   save() {
     if (isLocalStorageAvailable()) {
-      // save members into local storage
+      // save colleagues into local storage
       // value must be json string as local storage only receive string only
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.members));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.colleagues));
     }
   }
 
   add({name, email}) {
-    this.members.push(new Member(name, email))
+    this.colleagues.push(new Colleague(name, email))
   }
 
-  remove(member) {
-    const idx = this.members.indexOf(member)
+  remove(colleague) {
+    const idx = this.colleagues.indexOf(colleague)
     if (idx > -1) {
-      // assume member still in the list
+      // assume colleague still in the list
 
       // remove it
-      this.members.splice(idx, 1)
+      this.colleagues.splice(idx, 1)
 
       // save to localstorage
       this.save()
@@ -70,6 +70,13 @@ export default class {
     }
     return false
   }
+
+  hardReset() {
+    // for development use only
+    this.colleagues = []
+    this.save()
+  }
+
   get total() {
     return TOTAL_MEMBERS
   }

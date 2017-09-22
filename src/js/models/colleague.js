@@ -1,4 +1,4 @@
-class Member {
+class Colleague {
   constructor(name, email) {
     this.name = name
     this.email = email
@@ -6,15 +6,15 @@ class Member {
 }
 
 /**
- * convert Object-based array to Member-based array
+ * convert Object-based array to Colleague-based array
  */
-Member.fromArray = (array) => {
+Colleague.fromArray = (array) => {
   if (array == undefined) return [];
 
   return array.reduce((acc, {name, email}) => {
-    acc.push(new Member(name, email))
+    acc.push(new Colleague(name, email))
     return acc;
   }, [])
 }
 
-export default Member
+export default Colleague

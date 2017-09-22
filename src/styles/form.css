@@ -16,25 +16,25 @@
   margin: .3em 0;
 }
 
-.box > .members {
+.box > .colleagues {
   margin: 1em 0;
 }
 
-.box > .members > .member {
+.box > .colleagues > .colleague {
   display: flex;
   align-items: center;
 }
 
-.box > .members > .member > .remove-member {
+.box > .colleagues > .colleague > .remove-colleague {
   padding-left: .4em
 }
 
-.box > .add-member {
+.box > .add-colleague {
   margin-top: .9em;
   margin-bottom: 3em;
 }
 
-.remove-member {
+.remove-colleague {
   color: #BB0000;
   cursor: pointer;
 }
@@ -51,20 +51,20 @@
   padding: .3em 0;
 }
 
-/* added member */
-.member-added {
+/* added colleague */
+.colleague-added {
   padding: 0;
 }
 
-.member-added li {
+.colleague-added li {
   list-style: none;
   padding: .5em;
 }
 
-.member-added li:nth-child(even) {
+.colleague-added li:nth-child(even) {
   background: #dddddd;
 }
 
-.member-added li > .remove-member {
+.colleague-added li > .remove-colleague {
   margin-left: 1.4em;
 }
