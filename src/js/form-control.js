@@ -1,7 +1,7 @@
 import ColleagueController from './controllers/colleague.js'
 import Validator from './utils/form-validator.js'
 (($) => {
-  const MAX_COLLEAGUE_IN_FORM = 5
+  const MAX_COLLEAGUE_IN_FORM = 10
   const validator = new Validator()
   let colleagueFormCount = 0
 
