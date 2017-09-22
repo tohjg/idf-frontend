@@ -52,7 +52,6 @@ export default class {
   }
 
   add({name, email}) {
-    console.log('controller add', name, email)
     this.members.push(new Member(name, email))
   }
 

@@ -88,9 +88,14 @@ import Validator from './utils/form-validator.js'
     // skip checking since there are no data to check up
     if (members.length == 0) return false
 
-    return members.every((member) => {
-      console.log('lookup @', member.name, member.email, lookupEmail)
-      return (member.email === lookupEmail)
+    // Array.every iterates array until a test has failed.
+    return !members.every((member) => {
+      //   ^... why exclamation is here?
+      //
+      // function should return true when member email is not similar email from the DOM,
+      // otherwise false when found and break from the loop
+      // thus exclamation will flip the boolean switch to true
+      return (member.email !== lookupEmail)
     })
   }
 
