@@ -81,7 +81,7 @@ footer {
   position: fixed;
   bottom: 0;
   background: #dddddd;
-  padding: 1.6em 0 1em;
+  padding: 1.6em 0 1em; /* update this require to update footer-spacer */
   width: 100%;
   overflow: hidden;
   text-align: center;
@@ -92,8 +92,17 @@ footer {
   margin: 1em 18%;
 }
 
+/* hide element, for template usage */
+/* not sure if this is the best way to manipulate dom */
 .hide {
   visibility: hidden;
   height: 0;
   width: 0;
+}
+
+/* spacer at footer */
+/* for better performance, prefer hard coded value than jquery to calculate the footer */
+/* height = footer.padding-top + footer.padding-bottom */
+.footer-spacer {
+  height: 2.6em;
 }
