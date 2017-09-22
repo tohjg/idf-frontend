@@ -16,31 +16,32 @@ import Validator from './utils/form-validator.js'
     if (memberController.members.length > 0) {
       // assume template is available and has members
 
-      console.warn('todo: better dom manipulation by checking if member has being created on dom')
       memberController.members.forEach((member) => {
-        console.log('rendering', member)
-        // clone from new member template
-        const $self = $tmpl.clone()
-        // and show up
-        .removeClass('hide')
+        // check if member has populated in DOM
+        if ($container.find('#member_template:not(.hide)').find('#email:contains("'+member.email+'")')) {
+          // clone from new member template
+          const $self = $tmpl.clone()
+          // and show up
+          .removeClass('hide')
 
-        // populate model data to view
-        $self.find('#name').text(member.name)
-        $self.find('#email').text(member.email)
+          // populate model data to view
+          $self.find('#name').text(member.name)
+          $self.find('#email').text(member.email)
 
-        // add click listener to remove icon
-        $self.find('.remove-member').click((e) => {
-          console.log('-- remove me')
-          // remove it
-          memberController.remove(member)
+          // add click listener to remove icon
+          $self.find('.remove-member').click((e) => {
+            console.log('-- remove me')
+            // remove it
+            memberController.remove(member)
 
-          // remove itself from the view
-          // not matter if the member still exist in the list
-          $self.remove()
-        })
+            // remove itself from the view
+            // not matter if the member still exist in the list
+            $self.remove()
+          })
 
-        // append to the dom
-        $container.append($self)
+          // append to the dom
+          $container.append($self)
+        }
       })
     }
   }
@@ -189,6 +190,9 @@ import Validator from './utils/form-validator.js'
     // populate all the member in 'Existing colleagues'
     populateMembers(memberController)
 
+    // update member count
+    updateMembersCount(memberController)
+
     if ($('.member:not(.hide)').length == 0) {
       // assume there's no more form available
       // add new form
@@ -221,5 +225,8 @@ import Validator from './utils/form-validator.js'
     // to add all the filled colleague form to storage
     // and populate out @ existing colleagues
     $('#add-member-btn').click((e) => addMemberToStorage(memberController))
+
+    // click listener for 'reset' button
+    $('#reset-btn').click((e) => memberController.hardReset())
   })
 })(jQuery)
