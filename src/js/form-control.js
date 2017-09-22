@@ -33,6 +33,9 @@ import Validator from './utils/form-validator.js'
             // remove it
             colleagueController.remove(colleague)
 
+            // update colleague count
+            updateColleaguesCount(colleagueController);
+
             // remove itself from the view
             // not matter if the colleague still exist in the list
             $self.remove()
