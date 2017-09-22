@@ -63,6 +63,7 @@
 
 .colleague-added li:nth-child(even) {
   background: #dddddd;
+  color: #fff;
 }
 
 .colleague-added li > .remove-colleague {
