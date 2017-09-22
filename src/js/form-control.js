@@ -5,16 +5,43 @@ import Validator from './utils/form-validator.js'
   const validator = new Validator()
   let memberFormCount = 0
 
-  const populateMembers = (members) => {
+  const populateMembers = (memberController) => {
     const $tmpl = $('#member_template')
+    const $container = $('.member-added')
     if ($tmpl.length != 1) {
       console.warn('Member template is not found in the HTML')
       return
     }
 
-    if (members.length > 0) {
+    if (memberController.members.length > 0) {
       // assume template is available and has members
-      console.log('todo: duplicate template and write on it and append')
+
+      console.warn('todo: better dom manipulation by checking if member has being created on dom')
+      memberController.members.forEach((member) => {
+        console.log('rendering', member)
+        // clone from new member template
+        const $self = $tmpl.clone()
+        // and show up
+        .removeClass('hide')
+
+        // populate model data to view
+        $self.find('#name').text(member.name)
+        $self.find('#email').text(member.email)
+
+        // add click listener to remove icon
+        $self.find('.remove-member').click((e) => {
+          console.log('-- remove me')
+          // remove it
+          memberController.remove(member)
+
+          // remove itself from the view
+          // not matter if the member still exist in the list
+          $self.remove()
+        })
+
+        // append to the dom
+        $container.append($self)
+      })
     }
   }
 
@@ -24,6 +51,47 @@ import Validator from './utils/form-validator.js'
 
     $total.text(memberController.members.length)
     $left.text((memberController.total - memberController.members.length) + ' colleague'+ (memberController.members.length > 1 ? '' : 's'))
+  }
+
+  const invalidateRequire = ($field) => {
+    // invalidate empty field
+    const isValid = validator.required($field)
+    if (!isValid) {
+      // assume field is empty
+      $field.addClass('invalid')
+    } else {
+      $field.removeClass('invalid')
+    }
+
+    return isValid
+  }
+
+  const invalidateEmail = ($emailField) => {
+    // invalidate empty field
+    let isValid = validator.required($emailField)
+    // invalidate email format
+    isValid = validator.email($emailField)
+
+    if (!isValid) {
+      // assume field is empty or invalid email
+      $emailField.addClass('invalid')
+    } else {
+      $emailField.removeClass('invalid')
+    }
+
+    return isValid
+  }
+
+  const checkEmailExist = ($emailField, members) => {
+    const lookupEmail = $emailField.val()
+
+    // skip checking since there are no data to check up
+    if (members.length == 0) return false;
+
+    return members.every((member) => {
+      console.log('lookup @', member.name, member.email, lookupEmail)
+      return (member.email === lookupEmail)
+    })
   }
 
   const addMemberForm = () => {
@@ -39,36 +107,16 @@ import Validator from './utils/form-validator.js'
       // listen to remove member form listener
       $self.find('.remove-member').click((evt) => {
         if (memberFormCount > 1) {
-          $self.remove();
-          memberFormCount --;
+          $self.remove()
+          memberFormCount --
         }
       })
 
       // name field validation
-      $self.find('#name').on('keyup paste', (e) => {
-        // invalidate empty field
-        if (!validator.required(e)) {
-          // assume field is empty
-          $(e.currentTarget).addClass('invalid')
-        } else {
-          $(e.currentTarget).removeClass('invalid')
-        }
-      })
+      $self.find('#name').on('keyup', (e) => invalidateRequire($(e.currentTarget)))
 
       // email field validation
-      $self.find('#email').on('keyup paste', (e) => {
-        // invalidate empty field
-        let isValid = validator.required(e)
-        // invalidate email format
-        isValid = validator.email(e)
-
-        if (!isValid) {
-          // assume field is empty or invalid email
-          $(e.currentTarget).addClass('invalid')
-        } else {
-          $(e.currentTarget).removeClass('invalid')
-        }
-      })
+      $self.find('#email').on('keyup', (e) => invalidateEmail($(e.currentTarget)))
 
       $formContainer.append($self)
 
@@ -84,22 +132,94 @@ import Validator from './utils/form-validator.js'
     }
   }
 
-  $(document).ready(() => {
+  const addMemberToStorage = (memberController) => {
+    const $memberForms = $('.member:not(.hide)').toArray()
 
-    const memberController = new MemberController();
+    // clone members from memberController
+    const members = memberController.members
+
+    $memberForms.forEach((form) => {
+      const $form = $(form)
+      const $name = $form.find('#name')
+      const $email = $form.find('#email')
+      let isValid = true
+
+      // invalidate name field
+      if (!invalidateRequire($name)) {
+        // assume name is invalid
+        console.warn('todo: show error on name textfield, saying field is required')
+        return
+      }
+      console.log('name is valid')
+
+      // invalidate email field
+      if (!invalidateRequire($email) && !invalidateEmail($email)) {
+        // assume email is not valid email format
+        console.warn('todo: show error saying email is invalid format')
+        return
+      }
+      console.log('email is valid')
+
+      // invalidate email must not exist in the list
+      if (checkEmailExist($email, members)) {
+        // assume email is already added
+        console.warn('todo: show error saying email has exist in the list')
+        return
+      }
+      console.log('email address is not in the list')
+
+      // validation passed!
+      const name = $name.val()
+      const email = $email.val()
+
+      memberController.add({name, email})
+
+      // remove the form
+      $form.remove()
+    })
+
+    // assume all field is valid
+
+    // register all the data to memberController.member
+    memberController.members = members
+
+    // save to localStorage
+    memberController.save()
+
+    // populate all the member in 'Existing colleagues'
+    populateMembers(memberController)
+
+    if ($('.member:not(.hide)').length == 0) {
+      // assume there's no more form available
+      // add new form
+      addMemberForm();
+    }
+  }
+
+  $(document).ready(() => {
+    // when dom is ready
+
+    // init member model controller
+    const memberController = new MemberController()
 
     if (memberController.members.length > 0) {
       // populate all the members to existing colleague
-      populateMembers(memberController.members)
+      populateMembers(memberController)
     }
 
     // update member count based
     updateMembersCount(memberController)
 
     // populate the first form
-    addMemberForm();
+    addMemberForm()
 
     // add click listener to 'add another colleague' link
-    $('#add-member-link').click(addMemberForm);
+    // to add new colleague form
+    $('#add-member-link').click(addMemberForm)
+
+    // click listener to 'add all the colleagues' button
+    // to add all the filled colleague form to storage
+    // and populate out @ existing colleagues
+    $('#add-member-btn').click((e) => addMemberToStorage(memberController))
   })
 })(jQuery)

@@ -35,7 +35,9 @@ export default class {
 
     if (isLocalStorageAvailable()) {
       // populate data from localstorage
-      this.members = Member.fromArray(localStorage.getItem(STORAGE_KEY))
+      this.members = Member.fromArray(
+        JSON.parse(localStorage.getItem(STORAGE_KEY))
+      )
     } else {
       console.warn('localStorage is not available. Using memory as storage')
     }
@@ -43,10 +45,32 @@ export default class {
 
   save() {
     if (isLocalStorageAvailable()) {
-      localStorage.setItem(STORAGE_KEY, this.members);
+      // save members into local storage
+      // value must be json string as local storage only receive string only
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.members));
     }
   }
 
+  add({name, email}) {
+    console.log('controller add', name, email)
+    this.members.push(new Member(name, email))
+  }
+
+  remove(member) {
+    const idx = this.members.indexOf(member)
+    if (idx > -1) {
+      // assume member still in the list
+
+      // remove it
+      this.members.splice(idx, 1)
+
+      // save to localstorage
+      this.save()
+
+      return true;
+    }
+    return false
+  }
   get total() {
     return TOTAL_MEMBERS
   }
