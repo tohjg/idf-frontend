@@ -74,9 +74,7 @@
 }
 
 .box > .colleagues > .colleague > .remove-colleague {
-  display: inline;
-  padding-left: .4em;
-  position: relative;
+  padding-top: .6em;
 }
 
 .box > .add-colleague {
