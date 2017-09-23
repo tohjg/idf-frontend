@@ -1,4 +1,5 @@
 import Colleague from '../models/colleague.js'
+import EventEmitter from '../utils/event-emitter.js'
 
 const STORAGE_KEY = 'idf_frontend_colleagues'
 const isLocalStorageAvailable = () => {
@@ -29,8 +30,9 @@ const isLocalStorageAvailable = () => {
 
 const TOTAL_MEMBERS = 10
 
-export default class {
+export default class extends EventEmitter {
   constructor() {
+    super()
     this.colleagues = []
 
     if (isLocalStorageAvailable()) {
@@ -54,7 +56,10 @@ export default class {
   add({name, email}) {
     if (this.colleagues.length < this.total) {
       // assume there are some space to add
-      this.colleagues.push(new Colleague(name, email))
+      const newColleague = new Colleague(name, email)
+      this.colleagues.push(newColleague)
+
+      this.emit('added', newColleague)
     }
   }
 
@@ -64,10 +69,12 @@ export default class {
       // assume colleague still in the list
 
       // remove it
-      this.colleagues.splice(idx, 1)
+      const removedColleague = this.colleagues.splice(idx, 1)
 
       // save to localstorage
       this.save()
+
+      this.emit('removed', removedColleague)
 
       return true
     }
