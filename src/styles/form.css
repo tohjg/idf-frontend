@@ -22,11 +22,61 @@
 
 .box > .colleagues > .colleague {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.box > .colleagues > .colleague > .input-group {
+  display: inline-block;
+  width: 47%;
+}
+
+.box > .colleagues > .colleague > .input-group > input[type] {
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group > .message-tip {
+  color: #fff;
+  margin: .3em 0 .5em;
+  font-size: .9rem;
+  background: #BB0000;
+  padding: .4em;
+  border-radius: .3em;
+  margin-top: .6em;
+  opacity: 1;
+  -webkit-transition:opacity 250ms ease-out;
+  -moz-transition:opacity 250ms ease-out;
+   -ms-transition:opacity 250ms ease-out;
+    -o-transition:opacity 250ms ease-out;
+       transition:opacity 250ms ease-out;
+}
+
+.input-group > .message-tip::before {
+  content: ' ';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #bb0000;
+  position: absolute;
+  top: 2.9em;
+  left: 1em;
+}
+
+.input-group > .message-tip.hide {
+  visibility: hidden;
+  margin-top: 0;
+  padding: 0;
+  opacity: 0;
 }
 
 .box > .colleagues > .colleague > .remove-colleague {
-  padding-left: .4em
+  display: inline;
+  padding-left: .4em;
+  position: relative;
 }
 
 .box > .add-colleague {

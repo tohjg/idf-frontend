@@ -56,14 +56,32 @@ import Validator from './utils/form-validator.js'
     $left.text((colleagueController.total - colleagueController.colleagues.length) + ' colleague'+ (colleagueController.colleagues.length > 1 ? '' : 's'))
   }
 
+  const showMessageTip = ($field, msg) => {
+    // message-tip class must be wrapped with input-group class
+    const $messageTip = $field.parents('.input-group').find('.message-tip')
+
+    // show it out
+    $messageTip.removeClass('hide')
+    $messageTip.text(msg)
+  }
+
+  const hideMessageTip = ($field) => {
+    const $messageTip = $field.parents('.input-group').find('.message-tip')
+    $messageTip.addClass('hide')
+  }
+
   const invalidateRequire = ($field) => {
     // invalidate empty field
     const isValid = validator.required($field)
     if (!isValid) {
       // assume field is empty
+
       $field.addClass('invalid')
+      // show 'field is empty' in message tip
+      showMessageTip($field, 'Field is empty')
     } else {
       $field.removeClass('invalid')
+      hideMessageTip($field)
     }
 
     return isValid
@@ -78,8 +96,11 @@ import Validator from './utils/form-validator.js'
     if (!isValid) {
       // assume field is empty or invalid email
       $emailField.addClass('invalid')
+      // show 'email is invalid' in message tip
+      showMessageTip($emailField, 'Email is invalid')
     } else {
       $emailField.removeClass('invalid')
+      hideMessageTip($emailField)
     }
 
     return isValid
@@ -161,23 +182,27 @@ import Validator from './utils/form-validator.js'
       // invalidate name field
       if (!invalidateRequire($name)) {
         // assume name is invalid
-        console.warn('todo: show error on name textfield, saying field is required')
         return
       }
       console.log('name is valid')
 
       // invalidate email field
-      if (!invalidateRequire($email) || !invalidateEmail($email)) {
+      if (!invalidateRequire($email)) {
         // assume email is not valid email format
-        console.warn('todo: show error saying email is invalid format')
         return
       }
       console.log('email is valid')
 
+      // invalidate email format
+      if (!invalidateEmail($email)) {
+        return
+      }
+      console.log('email format is valid')
+
       // invalidate email must not exist in the list
       if (checkEmailExist($email, colleagues)) {
         // assume email is already added
-        console.warn('todo: show error saying email has exist in the list')
+        showMessageTip($email, 'Email already exist')
         return
       }
       console.log('email address is not in the list')

@@ -29,8 +29,14 @@
         <p>You can add up to 10 company colleagues, and there are currently <span id="colleague-total">0</span></p>
         <div class="colleagues">
           <div class="colleague hide" id="add-colleague-template">
-            <input type="text" name="name" id="name" placeholder="John Doe">
-            <input type="email" name="email" id="email" placeholder="john.doe@gmail.com">
+            <div class="input-group">
+              <input type="text" name="name" id="name" placeholder="John Doe">
+              <div class="message-tip hide">Error message here</div>
+            </div>
+            <div class="input-group">
+              <input type="email" name="email" id="email" placeholder="john.doe@gmail.com">
+              <div class="message-tip hide">Error message here</div>
+            </div>
             <i class="fa fa-trash-o remove-colleague"></i>
           </div>
         </div>
