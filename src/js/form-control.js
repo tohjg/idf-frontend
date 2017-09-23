@@ -243,6 +243,19 @@ import Validator from './utils/form-validator.js'
     updateAddColleagueButtonLabel()
   }
 
+  const resetForm = () => {
+    const $colleagueForms = $('.colleague:not(.hide)').toArray()
+
+    // remove all form
+    $colleagueForms.forEach((form) => {
+      const $form = $(form)
+      $form.remove()
+    })
+
+    // add new form
+    addColleagueForm()
+  }
+
   const updateAddColleagueButtonLabel = () => {
     if (colleagueFormCount == 1) {
       // just a single form
@@ -287,7 +300,7 @@ import Validator from './utils/form-validator.js'
     // click listener for 'reset' button
     $('#reset-btn').click((e) => {
       console.warn('todo: reset available form')
-      colleagueController.hardReset()
+      resetForm();
     })
   })
 })(jQuery)
