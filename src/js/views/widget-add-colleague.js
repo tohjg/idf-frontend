@@ -1,6 +1,5 @@
 import ColleagueForm from './form-colleague.js'
 
-let colleagueFormCount = 0
 const MAX_COLLEAGUE_IN_FORM = 10
 
 export default class AddColleagueWidget {
@@ -25,7 +24,7 @@ export default class AddColleagueWidget {
     // to add new colleague form
     $('#add-colleague-link').click((e) => {
       // check if total form is exceed max colleagues number
-      if (this.colleagueController.colleagues.length + colleagueFormCount + 1 <= this.colleagueController.total) {
+      if (this.colleagueController.colleagues.length + this.colleagueForms.length + 1 <= this.colleagueController.total) {
         this.addForm()
       }
     })
@@ -56,24 +55,25 @@ export default class AddColleagueWidget {
     const $formContainer = $('.colleagues')
 
     // add colleague form if form count is less than (MAX_COLLEAGUE_IN_FORM)
-    if (colleagueFormCount < MAX_COLLEAGUE_IN_FORM) {
+    if (this.colleagueForms.length < MAX_COLLEAGUE_IN_FORM) {
       const form = new ColleagueForm($colleagueFormTmpl)
 
       form.on('removing', () => {
         // this form is going to remove
 
-        if (colleagueFormCount > 1) {
+        if (this.colleagueForms.length > 1) {
           // there's more than 2 forms available
           // allow to remove the current form
-          form.remove();
+          this.removeForm(form)
         }
       })
 
       form.on('removed', () => {
         // this form has being removed
 
-        // update form count
-        colleagueFormCount --
+        // remove this form from cacahe
+        this.colleagueForms.splice(this.colleagueForms.indexOf(form), -1)
+
         // and add button label
         this.updateAddButtonLabel()
       })
@@ -85,21 +85,37 @@ export default class AddColleagueWidget {
       // register form
       this.colleagueForms.push(form)
 
-      // increment form count
-      colleagueFormCount ++
-
       // change 'add 'em all' button label
       this.updateAddButtonLabel()
     }
   }
 
+  removeForm(form) {
+    // find out the index of the form in the form cache
+    const idx = this.colleagueForms.indexOf(form)
+
+    if (idx > -1) {
+      // assume the form is not removed from cache
+
+      this.colleagueForms.splice(idx, 1)
+
+      // update add button label with new number of colleague form to be added
+      this.updateAddButtonLabel()
+
+      // remove the form from DOM
+      form.remove()
+      return true
+    }
+    return false
+  }
+
   updateAddButtonLabel() {
-    if (colleagueFormCount == 1) {
+    if (this.colleagueForms.length == 1) {
       // just a single form
       $('#add-colleague-btn').text(`Add a colleague`)
     } else {
       // more than that
-      $('#add-colleague-btn').text(`Add ${colleagueFormCount} colleagues`)
+      $('#add-colleague-btn').text(`Add ${this.colleagueForms.length} colleagues`)
     }
   }
 
@@ -108,7 +124,7 @@ export default class AddColleagueWidget {
     $('.colleague:not(.hide)').remove()
 
     // reset counter
-    colleagueFormCount = 0
+    this.colleagueForms = []
 
     // add new form
     this.addForm()
@@ -119,7 +135,10 @@ export default class AddColleagueWidget {
     if (this.colleagueController.colleagues.length >= this.colleagueController.total)
       return
 
+    const formGarbageCollector = []
+
     this.colleagueForms.forEach((form) => {
+      console.log('iterate form', form.getFormData())
       if (!form.invalidateNameField()) {
         // break! name field is invalid
         return
@@ -136,20 +155,24 @@ export default class AddColleagueWidget {
       }
 
       // assume validation successful
-      // save add data to controller
+      // add data to controller
       this.colleagueController.add(form.getFormData())
 
-      // remove the form
-      form.remove()
+      // remove the form later
+      // remove it now cause iteration interrupted
+      formGarbageCollector.push(form)
     })
 
     // assume all field is valid
 
+    // removing form from garbage collector
+    console.warn('todo: try to use single loop interaction for better performance')
+    formGarbageCollector.forEach((form) => {
+      this.removeForm(form)
+    })
+
     // save to localStorage
     this.colleagueController.save()
-
-    // populate all the colleague in 'Existing colleagues'
-    //populateColleagues(colleagueController)
 
     // update colleague count
     this.updateCount()
