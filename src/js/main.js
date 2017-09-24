@@ -6,7 +6,10 @@ import ExistingColleagueWidget from './views/widget-existing-colleagues.js'
   $(document).ready(() => {
     // when dom is ready
 
-    // init colleague model controller
+    // init colleague model controller to handle:
+    // 1. data transaction in LocalStorage
+    // 2. in-memory data transaction
+    // 3. proxy in between all the view
     const colleagueController = new ColleagueController()
 
     // init widgets

@@ -3,6 +3,10 @@ import EventEmitter from '../utils/event-emitter.js'
 
 const validator = new Validator();
 
+/**
+ * check if the input field is empty
+ * @param {jQuery} $field input field to be validated
+ */
 const invalidateEmptyField = ($field) => {
   const isValid = validator.required($field)
 
@@ -22,6 +26,10 @@ const invalidateEmptyField = ($field) => {
   return isValid
 }
 
+/**
+ * check if the input field value is valid email address format
+ * @param {jQuery} $field input field to be validated
+ */
 const invalidateEmailFormat = ($field) => {
   // invalidate email format
   const isValid = validator.email($field)
@@ -39,6 +47,11 @@ const invalidateEmailFormat = ($field) => {
   return isValid
 }
 
+/**
+ * show error message on message tip on each input field
+ * @param {jQuery} $field target input field
+ * @param {string} msg message to be show
+ */
 const showMessageTip = ($field, msg) => {
   // message-tip class must be wrapped with input-group class
   const $messageTip = $field.parents('.input-group').find('.message-tip')
@@ -48,11 +61,19 @@ const showMessageTip = ($field, msg) => {
   $messageTip.text(msg)
 }
 
+/**
+ * hide error message tip
+ * @param {jQuery} $field target input field
+ */
 const hideMessageTip = ($field) => {
   const $messageTip = $field.parents('.input-group').find('.message-tip')
   $messageTip.addClass('hide')
 }
 
+
+/**
+ * single colleague form component
+ */
 export default class ColleagueForm extends EventEmitter {
   constructor($formTemplate) {
     super()
@@ -62,6 +83,10 @@ export default class ColleagueForm extends EventEmitter {
       .removeClass('hide')
   }
 
+  /**
+   * initialise colleague form
+   * @return {jQuery} this form in jQuery DOM
+   */
   init() {
     // listen to remove colleague form listener
     this.$self.find('.remove-colleague').click((evt) => {
@@ -82,6 +107,9 @@ export default class ColleagueForm extends EventEmitter {
     return this.$self
   }
 
+  /**
+   * remove this form
+   */
   remove() {
     // remove the form
     this.$self.remove()
@@ -90,11 +118,17 @@ export default class ColleagueForm extends EventEmitter {
     this.emit('removed')
   }
 
+  /**
+   * invalidate name input field
+   */
   invalidateNameField() {
     const $field = this.$self.find('#name')
     return invalidateEmptyField($field)
   }
 
+  /**
+   * invalidate email input field
+   */
   invalidateEmailField() {
     const $field = this.$self.find('#email')
     if (!invalidateEmptyField($field))
@@ -104,6 +138,10 @@ export default class ColleagueForm extends EventEmitter {
     return invalidateEmailFormat($field)
   }
 
+  /**
+   * check if email already exists in array
+   * @param {array<Colleague>} colleagues
+   */
   checkEmailExist(colleagues) {
     const lookupEmail = this.$self.find('#email').val()
 
@@ -128,6 +166,9 @@ export default class ColleagueForm extends EventEmitter {
     return found
   }
 
+  /**
+   * get name and email data in object format
+   */
   getFormData() {
     return {
       name: this.$self.find('#name').val(),

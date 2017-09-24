@@ -2,6 +2,9 @@ import ColleagueForm from './form-colleague.js'
 
 const MAX_COLLEAGUE_IN_FORM = 10
 
+/**
+ * Add colleague forms widget
+ */
 export default class AddColleagueWidget {
   constructor(colleagueController) {
     this.colleagueController = colleagueController
@@ -11,7 +14,8 @@ export default class AddColleagueWidget {
       this.updateCount()
     })
 
-    // array to store forms in ColleagueForm instance
+    // cache array in ColleagueFrom instance
+    // to store forms in the DOM
     this.colleagueForms = []
 
     // update colleague count based
@@ -20,42 +24,48 @@ export default class AddColleagueWidget {
     // add the first form for initial stage
     this.addForm()
 
-    // add click listener to 'add another colleague' link
-    // to add new colleague form
+    // click listeners
+    // 'add another colleague' link to add new colleague form
     $('#add-colleague-link').click((e) => {
-      // check if total form is exceed max colleagues number
+      // check if total form is exceed max existing colleagues number
       if (this.colleagueController.colleagues.length + this.colleagueForms.length + 1 <= this.colleagueController.total) {
         this.addForm()
       }
     })
 
-    // click listener for 'reset' button
+    // 'reset form' button
     $('#reset-btn').click((e) => {
       this.resetForm()
     })
 
-    // click listener to 'add all the colleagues' button
-    // to add all the filled colleague form to storage
-    // and populate out @ existing colleagues
+    // 'add all the colleagues' button
+    // to add all the filled colleague form to data controller
     $('#add-colleague-btn').click((e) => this.addColleagueToStorage(colleagueController))
   }
 
+  /**
+   * update total colleagues has being added and number of colleagues that user can add
+   */
   updateCount() {
+    // text view for number of colleagues that user can add
     const $left = $('#colleague-left')
+    // text view for total colleagues has being added (in memory)
     const $total = $('#colleague-total')
 
-    // update colleague
     $total.text(this.colleagueController.colleagues.length)
-    // update how many colleague that user can add
     $left.text((this.colleagueController.total - this.colleagueController.colleagues.length) + ' colleague'+ (this.colleagueController.colleagues.length > 1 ? '' : 's'))
   }
 
+  /**
+   * adding new form
+   */
   addForm() {
     const $colleagueFormTmpl = $('#add-colleague-template')
     const $formContainer = $('.colleagues')
 
-    // add colleague form if form count is less than (MAX_COLLEAGUE_IN_FORM)
     if (this.colleagueForms.length < MAX_COLLEAGUE_IN_FORM) {
+      // assume colleague form count is less than (MAX_COLLEAGUE_IN_FORM)
+
       const form = new ColleagueForm($colleagueFormTmpl)
 
       form.on('removing', () => {
@@ -72,10 +82,7 @@ export default class AddColleagueWidget {
         // this form has being removed
 
         // remove this form from cacahe
-        this.colleagueForms.splice(this.colleagueForms.indexOf(form), -1)
-
-        // and add button label
-        this.updateAddButtonLabel()
+        this.removeForm(form)
       })
 
       // init the form and it should return newly create form
@@ -85,11 +92,15 @@ export default class AddColleagueWidget {
       // register form
       this.colleagueForms.push(form)
 
-      // change 'add 'em all' button label
+      // update 'add 'em all' button label
       this.updateAddButtonLabel()
     }
   }
 
+  /**
+   * removing the form from cache and update 'add' button label
+   * @param {ColleagueForm} form
+   */
   removeForm(form) {
     // find out the index of the form in the form cache
     const idx = this.colleagueForms.indexOf(form)
@@ -109,6 +120,9 @@ export default class AddColleagueWidget {
     return false
   }
 
+  /**
+   * update 'add colleague' button label
+   */
   updateAddButtonLabel() {
     if (this.colleagueForms.length == 1) {
       // just a single form
@@ -119,6 +133,9 @@ export default class AddColleagueWidget {
     }
   }
 
+  /**
+   * reset all the forms to initial stage
+   */
   resetForm() {
     // remove all form
     $('.colleague:not(.hide)').remove()
@@ -130,6 +147,9 @@ export default class AddColleagueWidget {
     this.addForm()
   }
 
+  /**
+   * invalidate and save all the colleagues that filled in the form
+   */
   addColleagueToStorage() {
     // break this function if total colleagues has reach the max
     if (this.colleagueController.colleagues.length >= this.colleagueController.total)

@@ -1,5 +1,8 @@
 import EventEmitter from '../utils/event-emitter.js'
 
+/**
+ * colleague info component
+ */
 export default class ColleagueInfo extends EventEmitter {
   constructor(info) {
     super()
@@ -8,6 +11,9 @@ export default class ColleagueInfo extends EventEmitter {
     this.populate()
   }
 
+  /**
+   * populate colleague
+   */
   populate() {
     const $tmpl = $('#colleague_template')
     const $container = $('.colleague-added')

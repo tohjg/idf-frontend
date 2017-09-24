@@ -1,3 +1,7 @@
+
+/**
+ * model class for colleague
+ */
 class Colleague {
   constructor(name, email) {
     this.name = name
@@ -7,6 +11,8 @@ class Colleague {
 
 /**
  * convert Object-based array to Colleague-based array
+ *
+ * @param {array} array pure Object-based array
  */
 Colleague.fromArray = (array) => {
   if (array == undefined) return [];

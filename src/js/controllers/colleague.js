@@ -1,6 +1,7 @@
 import Colleague from '../models/colleague.js'
 import EventEmitter from '../utils/event-emitter.js'
 
+// storage key to get/set data into LocalStorage
 const STORAGE_KEY = 'idf_frontend_colleagues'
 const isLocalStorageAvailable = () => {
   try {
@@ -28,8 +29,11 @@ const isLocalStorageAvailable = () => {
   }
 }
 
-const TOTAL_MEMBERS = 10
+const TOTAL_COLLEAGUES = 10
 
+/**
+ * data controller for Colleague as well as data action proxy
+ */
 export default class extends EventEmitter {
   constructor() {
     super()
@@ -45,6 +49,9 @@ export default class extends EventEmitter {
     }
   }
 
+  /**
+   * save in-memory data into LocalStorage for persistance
+   */
   save() {
     if (isLocalStorageAvailable()) {
       // save colleagues into local storage
@@ -53,16 +60,25 @@ export default class extends EventEmitter {
     }
   }
 
+  /**
+   * add colleague to in-memory data
+   * @param {object} info object contain name and email key and value
+   */
   add({name, email}) {
     if (this.colleagues.length < this.total) {
       // assume there are some space to add
       const newColleague = new Colleague(name, email)
       this.colleagues.push(newColleague)
 
+      // dispatch action event
       this.emit('added', newColleague)
     }
   }
 
+  /**
+   * remove colleague from in-memory data
+   * @param {Colleague} colleague
+   */
   remove(colleague) {
     const idx = this.colleagues.indexOf(colleague)
     if (idx > -1) {
@@ -74,6 +90,7 @@ export default class extends EventEmitter {
       // save to localstorage
       this.save()
 
+      // dispatch action event
       this.emit('removed', removedColleague)
 
       return true
@@ -81,13 +98,20 @@ export default class extends EventEmitter {
     return false
   }
 
+  /**
+   * total remove data
+   * only for development
+   */
   hardReset() {
     // for development use only
     this.colleagues = []
     this.save()
   }
 
+  /**
+   * total colleague can be added
+   */
   get total() {
-    return TOTAL_MEMBERS
+    return TOTAL_COLLEAGUES
   }
 }

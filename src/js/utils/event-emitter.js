@@ -2,11 +2,19 @@ const isFunction = function(obj) {
   return typeof obj == 'function' || false
 }
 
+/**
+ * event dispatcher
+ */
 export default class EventEmitter {
   constructor() {
     this.listeners = new Map()
   }
 
+  /**
+   * add event listener
+   * @param {string} event label
+   * @param {function} callback event callback
+   */
   on(event, callback) {
     // assume event is not registered before
     // create array inside listeners map
@@ -16,6 +24,11 @@ export default class EventEmitter {
     this.listeners.get(event).push(callback)
   }
 
+  /**
+   * remove event listener
+   * @param {string} event label
+   * @param {function} callback event callback
+   */
   off(event, callback) {
     const listeners = this.listeners.get(event)
     let index
@@ -40,6 +53,12 @@ export default class EventEmitter {
     }
     return false
   }
+
+  /**
+   * disptach event
+   * @param {string} event label
+   * @param {*} args more arguments to pass to event callback
+   */
   emit(event, ...args) {
       let listeners = this.listeners.get(event)
 
