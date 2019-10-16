@@ -19,7 +19,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8"
